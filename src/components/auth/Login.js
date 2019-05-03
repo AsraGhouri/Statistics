@@ -53,6 +53,9 @@ const styles = theme => ({
     height: 'auto',
     padding: '0px',
     margin: '0px',
+  },
+  error: {
+    color: 'red',
   }
 });
 
@@ -109,7 +112,7 @@ class SignIn extends Component {
                   Sign in
           </Button>
               </form>
-              {authError ? <p>{authError}</p> : null}
+              {authError ? <p className={classes.error}>{authError}</p> : null}
             </Paper>
           </main>
         </center>

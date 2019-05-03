@@ -50,6 +50,9 @@ const styles = theme => ({
     height: 'auto',
     padding: '0px',
     margin: '0px',
+  },
+  error: {
+    color: 'red',
   }
 });
 class SignUp extends Component {
@@ -100,6 +103,7 @@ class SignUp extends Component {
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input type="password" id='password' onChange={this.handleChange} autoComplete="current-password" />
                 </FormControl>
+                { authError ? <p className={classes.error}>{authError}</p> : null }
                 <Button
                   type="submit"
                   fullWidth
@@ -109,6 +113,7 @@ class SignUp extends Component {
                 >
                   Sign Up
           </Button>
+
               </form>
             </Paper>
           </main>
