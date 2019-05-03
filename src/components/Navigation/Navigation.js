@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './Navigation.css'
+import { Link } from 'react-router-dom'
+import SignedInLinks from '../layouts/SignedInLinks'
+import SignedOutLinks from '../layouts/SignedOutLinks'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +17,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import fire from '../../config/Fire';
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 const styles = {
   root: {
     flexGrow: 1,
@@ -67,22 +70,17 @@ class Navigation extends Component {
 
   render() {
     const { classes } = this.props;
+    const { auth, profile } = this.props;
+    // console.log(auth);
+    const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.appbar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              <Link to='/' className={classes.link}>
-                STATISTICS
-              </Link>
+          <Typography variant="h6" color="inherit" className={classes.grow}>
+            <Link to='/' className="brand-logo">Speed Up</Link>
             </Typography>
-            {this.state.user ?
-              <MenuItem > <Link to='/dashboard' onClick={this.logout} className={classes.link}>Sign Out</Link></MenuItem>
-              : (
-                <span>
-                    <Link to='/login' className={classes.link}>Login</Link>
-                    <Link to='/signup' className={classes.link}>Sign Up</Link>
-                </span>)}
+            {links}
           </Toolbar>
         </AppBar>
       </div >
@@ -92,5 +90,12 @@ class Navigation extends Component {
 Navigation.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+const mapStateToProps = (state) => {
+  // console.log(state);
+  return{
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
+  }
+}
 
-export default withStyles(styles)(Navigation);
+export default connect(mapStateToProps)(withStyles(styles)(Navigation));
