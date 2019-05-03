@@ -9,9 +9,6 @@ import Dashboard from '../src/components/Dashboard/Dashboard';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 const styles = theme => ({
- app: {
-   backgroundImage: 'url(' + 'fabio-mangione.f26c34bb.jpg' + ')',
- }
 });
 
 class App extends Component {
@@ -44,7 +41,7 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="App">
-        <Navigation />
+        {/* <Navigation /> */}
         <Switch>
             <Route exact path='/'component={Dashboard} />
             <Route path='/signin' component={SignIn} />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../auth/css/Login.css'
+import '../auth/css/Signup.css'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../store/actions/authActions'
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -31,25 +32,41 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: "transparent",
+    boxShadow: "none",
+    overflow: "hidden",
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:  ' #0abde3',
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor:  ' #0abde3',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing.unit,
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,
-    backgroundColor: 'black',
-    color: 'white'
-  },
+      marginTop: theme.spacing.unit * 3,
+      backgroundColor: ' #0abde3',
+      color: 'white'
+    },
   root: {
     height: 'auto',
-    padding: '0px',
-    margin: '0px',
+    marginTop: '50px',
+    backgroundColor: "transparent",
+    width: 'auto',
+    display: 'block', // Fix IE 11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    }
   },
   error: {
     color: 'red',
@@ -75,7 +92,7 @@ class SignUp extends Component {
     const { auth, authError, classes } = this.props;
     if (auth.uid) return <Redirect to='/' />
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id="signup">
         <center>
           <main className={classes.main}>
             <CssBaseline />
@@ -84,7 +101,7 @@ class SignUp extends Component {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign Up
+              WhaleDM
               </Typography>
               <form className={classes.form} onSubmit={this.handleSubmit}>
                 <FormControl margin="normal" required fullWidth>

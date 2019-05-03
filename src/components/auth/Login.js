@@ -16,6 +16,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const styles = theme => ({
   main: {
@@ -29,30 +30,51 @@ const styles = theme => ({
       marginRight: 'auto',
     },
   },
+  links : {
+    color: 'rgba(0, 0, 0, 0.87)',
+    textDecoration: 'none',
+    margin : '10px',
+    float : 'right',
+    fontSize: '15px',
+    paddingTop: '5px',
+},
   paper: {
     marginTop: theme.spacing.unit * 8,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: "transparent",
+    boxShadow: "none",
+    overflow: "hidden",
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:  ' #0abde3',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing.unit,
+    color: 'white'
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
-    backgroundColor: 'black',
+    backgroundColor: ' #0abde3',
     color: 'white'
   },
   root: {
     height: 'auto',
-    padding: '0px',
-    margin: '0px',
+    marginTop: '50px',
+    backgroundColor: "transparent",
+    width: 'auto',
+    display: 'block', // Fix IE 11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    }
   },
   error: {
     color: 'red',
@@ -78,16 +100,16 @@ class SignIn extends Component {
     const { authError, auth } = this.props;
     if (auth.uid) return <Redirect to='/' />
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id="login">
         <center>
           <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
+            {/* <CssBaseline /> */}
+            <Paper className={classes.paper} id="main">
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+              WhaleDM
               </Typography>
               <form className={classes.form} onSubmit={this.handleSubmit}>
                 <FormControl margin="normal" required fullWidth>
@@ -99,9 +121,11 @@ class SignIn extends Component {
                   <Input name="password" value={this.state.password} onChange={this.handleChange} type="password" id="password" autoComplete="current-password" />
                 </FormControl>
                 <FormControlLabel
+                className="remember"
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
+                <NavLink className={classes.links} color="primary" to='/signup'>Register</NavLink>
                 <Button
                   type="submit"
                   fullWidth
@@ -109,7 +133,7 @@ class SignIn extends Component {
                   type="submit"
                   className={classes.submit}
                 >
-                  Sign in
+                  LOGIN
           </Button>
               </form>
               {authError ? <p className={classes.error}>{authError}</p> : null}
