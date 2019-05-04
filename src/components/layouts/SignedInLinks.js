@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 const styles = theme => ({
     links : {
-        color: 'white',
+        color: 'black',
         textDecoration: 'none',
         margin : '10px',
         cursor: 'pointer',

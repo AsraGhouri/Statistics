@@ -13,6 +13,6 @@ import 'firebase/storage';
   messagingSenderId: "594841888201"
   };
   const fire = firebase.initializeApp(config);
-  
+  firebase.firestore().settings({ timestampsInSnapshots: true });
 
 export default fire;
