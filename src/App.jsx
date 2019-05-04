@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import fire from './config/Fire';
 import SignIn from '../src/components/auth/Login'
-import Navigation from '../src/components/Navigation/Navigation';
+// import Navigation from '../src/components/Navigation/Navigation';
 import { BrowserRouter , Switch, Route} from 'react-router-dom'
 import SignUp from '../src/components/auth/SignUp';
 import Dashboard from '../src/components/Dashboard/Dashboard';

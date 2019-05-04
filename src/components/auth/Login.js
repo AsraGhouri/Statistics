@@ -16,6 +16,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
+import fire from '../../config/Fire'
 import { NavLink } from 'react-router-dom'
 
 const styles = theme => ({
@@ -30,14 +31,14 @@ const styles = theme => ({
       marginRight: 'auto',
     },
   },
-  links : {
+  links: {
     color: 'rgba(0, 0, 0, 0.87)',
     textDecoration: 'none',
-    margin : '10px',
-    float : 'right',
+    margin: '10px',
+    float: 'right',
     fontSize: '15px',
     paddingTop: '5px',
-},
+  },
   paper: {
     marginTop: theme.spacing.unit * 8,
     display: 'flex',
@@ -50,7 +51,7 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor:  ' #0abde3',
+    backgroundColor: ' #0abde3',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -84,20 +85,58 @@ const styles = theme => ({
 class SignIn extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    user: {},
+    rememberMe: false,
+  }
+  componentDidMount() {
+    this.authListener();
+    // <Redirect to='home' />
+  }
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        this.setState({ user });
+        //localStorage.setItem('user', user.uid);
+      } else {
+        this.setState({ user: null });
+        //localStorage.removeItem('user');
+      }
+    });
   }
   handleChange = (e) => {
+    const input = e.target;
+    const value = input.name === 'rememberMe' ? input.checked : input.value;
+    this.setState({ [input.name]: value });
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
+    const { rememberMe } = this.state;
+    localStorage.setItem('rememberMe', rememberMe);
+    localStorage.setItem('user', rememberMe ? this.props.signIn(this.state) : '');
     this.props.signIn(this.state)
   }
+  componentDidMount() {
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+    const user = rememberMe ? localStorage.getItem('user') : '';
+    this.setState({ user, rememberMe });
+  }
   render() {
+
     const { classes } = this.props;
-    const { authError, auth } = this.props;
+    const { authError, auth, profile } = this.props;
+    var txt;
+    if (this.state.isChecked) {
+      txt = 'checked'
+    } else {
+      txt = 'unchecked'
+    }
+    console.log(profile)
     if (auth.uid) return <Redirect to='/' />
     return (
       <div className={classes.root} id="login">
@@ -109,7 +148,7 @@ class SignIn extends Component {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-              WhaleDM
+                WhaleDM
               </Typography>
               <form className={classes.form} onSubmit={this.handleSubmit}>
                 <FormControl margin="normal" required fullWidth>
@@ -121,7 +160,11 @@ class SignIn extends Component {
                   <Input name="password" value={this.state.password} onChange={this.handleChange} type="password" id="password" autoComplete="current-password" />
                 </FormControl>
                 <FormControlLabel
-                className="remember"
+                  className="remember"
+                  name="rememberMe"
+                  checked={this.state.rememberMe}
+                  onChange={this.handleChange}
+                  type="checkbox"
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
@@ -148,9 +191,11 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     authError: state.auth.authError,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
   }
 }
 
