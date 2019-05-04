@@ -30,7 +30,7 @@ const styles = {
     marginRight: 20,
   },
   appbar: {
-    backgroundColor: '#212121',
+    // backgroundColor: '#0abde3'
   },
   link: {
     color: 'white',
@@ -78,7 +78,7 @@ class Navigation extends Component {
         <AppBar position="static" className={classes.appbar}>
           <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            <Link to='/' className="brand-logo">Speed Up</Link>
+            <Link to='/' className="brand-logo">WhaleDM</Link>
             </Typography>
             {links}
           </Toolbar>
